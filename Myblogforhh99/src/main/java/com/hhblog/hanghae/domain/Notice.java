@@ -1,5 +1,6 @@
 package com.hhblog.hanghae.domain;
 
+import com.hhblog.hanghae.security.UserDetailsImpl;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,9 +30,9 @@ public class Notice extends Timestamped { // 생성,수정 시간을 자동으�
 //        this.contents = contents;
 //    }
 
-    public Notice(NoticeRequestDto requestDto) {
+    public Notice(NoticeRequestDto requestDto, UserDetailsImpl userDetails) {
         this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
+        this.username = userDetails.getUsername();
         this.contents = requestDto.getContents();
     }
 

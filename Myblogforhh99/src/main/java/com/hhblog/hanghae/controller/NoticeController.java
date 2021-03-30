@@ -3,8 +3,10 @@ package com.hhblog.hanghae.controller;
 import com.hhblog.hanghae.domain.Notice;
 import com.hhblog.hanghae.domain.NoticeRepository;
 import com.hhblog.hanghae.domain.NoticeRequestDto;
+import com.hhblog.hanghae.security.UserDetailsImpl;
 import com.hhblog.hanghae.service.NoticeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +19,10 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @PostMapping("/api/notices")
-    public Notice createNotice(@RequestBody NoticeRequestDto requestDto) {
-        Notice notice = new Notice(requestDto);
-        return noticeRepository.save(notice);
+    public Notice createNotice(@RequestBody NoticeRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Notice notice = new Notice(requestDto, userDetails);
+        noticeRepository.save(notice);
+        return notice;
     }
 
     @GetMapping("/api/notices")
