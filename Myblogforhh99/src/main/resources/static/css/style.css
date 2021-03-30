@@ -1,0 +1,113 @@
+.jumbotron{
+    background-color: #58a8f8;
+}
+.wrap {
+    width: 538px;
+    margin: 10px auto;
+    margin-bottom: 50px;
+}
+.formWrap {
+    width: 100%;
+    border: 3px solid #eee;
+    border-radius: 10px;
+    padding: 25px;
+}
+.form-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.input-group {
+    margin-bottom: 30px;
+}
+.textArea {
+    height: 150px;
+}
+.width100 {
+    width: 100%;
+}
+
+
+.card {
+    width: 100%;
+    border: 3px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.card .metadata {
+
+}
+
+.card .metadata .postTitle {
+    width: 100%;
+    font-size: 20px;
+    padding: 15px;
+    background: #eeeeee;
+    font-weight: bold;
+    display: block;
+}
+.card .metadata .postUsername {
+    font-size: 18px;
+    padding: 8px 15px;
+    display: inline-block;
+}
+.card .metadata .date {
+    font-size: 14px;
+    padding: 8px 0px;
+    display: inline-block;
+}
+.card .contents {
+    font-size: 18px;
+    padding: 8px 15px;
+    width: 100%;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.contents pre {
+    margin-bottom: 0;
+}
+.titleInput{
+    display: none;
+}
+.titleInput .form-control2 {
+    width: calc( 100% - 30px );
+    margin: 8px 15px;
+    border: 2px solid red;
+    padding: 8px 15px;
+}
+
+.userInput {
+    display: none;
+}
+.userInput .form-control {
+    width: calc( 100% - 30px );
+    margin: 8px 15px;
+    border: 2px solid red;
+    padding: 8px 15px;
+}
+
+.contents div.edit {
+    display: none;
+}
+
+.div.edit {
+    display: none;
+}
+
+.contents textarea.te-edit {
+    width: 100%;
+    border: 2px solid red;
+    padding: 8px 15px;
+}
+
+.footer {
+    float: right;
+    text-align: right;
+    padding: 8px;
+}
+
+#cards-box {
+    margin-top: 12px;
+}
+
