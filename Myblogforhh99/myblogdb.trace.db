@@ -1,0 +1,9 @@
+2021-03-29 16:17:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+select user0_.id as id1_1_, user0_.created_at as created_2_1_, user0_.modified_at as modified3_1_, user0_.email as email4_1_, user0_.password as password5_1_, user0_.role as role6_1_, user0_.username as username7_1_ from user user0_ where user0_.username=? [42102-200]
+2021-03-29 16:19:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+select user0_.id as id1_1_, user0_.created_at as created_2_1_, user0_.modified_at as modified3_1_, user0_.email as email4_1_, user0_.password as password5_1_, user0_.role as role6_1_, user0_.username as username7_1_ from user user0_ where user0_.username=? [42102-200]
+2021-03-29 16:33:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+select user0_.id as id1_1_, user0_.created_at as created_2_1_, user0_.modified_at as modified3_1_, user0_.email as email4_1_, user0_.password as password5_1_, user0_.role as role6_1_, user0_.username as username7_1_ from user user0_ where user0_.username=? [42102-200]
