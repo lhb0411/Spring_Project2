@@ -2,14 +2,14 @@ package com.hhblog.hanghae.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity // 스프링 Security 지원을 가능하게 함
-@EnableGlobalMethodSecurity(securedEnabled = true)
+//@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //password 복호화 해서 저장(스프링 시큐리티 제공 class)
     @Bean
@@ -22,22 +22,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
 
         http.authorizeRequests()
-                // image 폴더를 login 없이 허용
                 .antMatchers("/images/**").permitAll()
-                // css 폴더를 login 없이 허용
-                .antMatchers("/css/**").permitAll()
-                // css 폴더를 login 없이 허용
-                .antMatchers("/js/**").permitAll()
-                //회원가입 프로세스 확인
+                .antMatchers("/style.css").permitAll()
                 .antMatchers("/user/**").permitAll()
-                //H2 콘솔 허용
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/user/**").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/api/**").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/user/login")
-                .loginProcessingUrl("/user/login")
+                .failureUrl("/user/login/error")
                 .defaultSuccessUrl("/")
                 .permitAll()
                 .and()

@@ -18,7 +18,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    // 회원 로그인 페이지 // thymleaf에 의해 login string만 내려주면 login.html을 찾아 보여
+    // 회원 로그인 페이지 // thymleaf에 의해 login string만 내려주면 login.html을 찾아 보여줌
     @GetMapping("/user/login")
     public String login() {
         return "login";
@@ -48,7 +48,7 @@ public class UserController {
             model.addAttribute("message", e.getMessage());
             return "signup";
         }
-        return "redirect:/";
+        return "redirect:/user/login";
     }
 
 
@@ -59,5 +59,5 @@ public class UserController {
         userService.kakaoLogin(code);
 
         return "redirect:/";
-    }
+        }
 }

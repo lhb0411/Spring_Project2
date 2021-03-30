@@ -22,12 +22,12 @@ public class Notice extends Timestamped { // 생성,수정 시간을 자동으�
     @Column(nullable = false)
     private String contents;
 
-
-    public Notice(String title, String username, String contents) {
-        this.title = title;
-        this.username = username;
-        this.contents = contents;
-    }
+//
+//    public Notice(String title, String username, String contents) {
+//        this.title = title;
+//        this.username = username;
+//        this.contents = contents;
+//    }
 
     public Notice(NoticeRequestDto requestDto) {
         this.title = requestDto.getTitle();
