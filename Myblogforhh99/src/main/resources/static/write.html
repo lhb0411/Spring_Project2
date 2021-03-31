@@ -113,6 +113,8 @@
 
         function addHTML(id, title, username, contents, modifiedAt) {
             // 1. HTML 태그를 만듭니다.
+            console.log('test');
+            console.log(id, title, username, contents, modifiedAt);
             let tempHtml = `<div class="card">
                                 <!-- date/username 영역 -->
                                 <div class="metadata">
@@ -164,40 +166,40 @@
                 // 1. HTML 태그를 만듭니다.
                 let tempHtml = `<div class="card">
                 <!-- date/username 영역 -->
-            <div class="metadata">
-            <div class="input-group titleInput" id="${id}-inputArea2">
-            <input id="${id}-titleInput" type="text" name="title" id="title" class="form-control2" placeholder="제목을 쓰세요" aria-describedby="basic-addon2">
-            <span class="input-group-addon" id="basic-addon2"></span>
-            </div>
-            <a id="${id}-title" class="postTitle" >
-            ${title}
-            </a>
+                    <div class="metadata">
+                    <div class="input-group titleInput" id="${id}-inputArea2">
+                    <input id="${id}-titleInput" type="text" name="title" id="title" class="form-control2" placeholder="제목을 쓰세요" aria-describedby="basic-addon2">
+                    <span class="input-group-addon" id="basic-addon2"></span>
+                    </div>
+                    <a id="${id}-title" class="postTitle" >
+                    ${title}
+                    </a>
 
-            <div id="${id}-username" class="postUsername">
-            ${username}
-            </div>
+                    <div id="${id}-username" class="postUsername">
+                    ${username}
+                    </div>
 
-            <div class="input-group userInput" id="${id}-inputArea">
-            <input id="${id}-userInput" type="text" name="username" id="username" class="form-control" placeholder="이름을 쓰세요" aria-describedby="basic-addon2">
-            <span class="input-group-addon" id="basic-addon2"></span>
-            </div>
+                    <div class="input-group userInput" id="${id}-inputArea">
+                    <input id="${id}-userInput" type="text" name="username" id="username" class="form-control" placeholder="이름을 쓰세요" aria-describedby="basic-addon2">
+                    <span class="input-group-addon" id="basic-addon2"></span>
+                    </div>
 
-            <div class="date" id="${id}-inputDate">
-            ${modifiedAt}
-            </div>
-            </div>
-                <!-- contents 조회/수정 영역-->
-            <div class="contents">
-            <div id="${id}-contents" class="text">
-            <pre>${contents}</pre>
-            </div>
-            <div id="${id}-editarea" class="edit">
-            <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
-            </div>
-            </div>
+                    <div class="date" id="${id}-inputDate">
+                    ${modifiedAt}
+                    </div>
+                    </div>
+                        <!-- contents 조회/수정 영역-->
+                    <div class="contents">
+                    <div id="${id}-contents" class="text">
+                    <pre>${contents}</pre>
+                    </div>
+                    <div id="${id}-editarea" class="edit">
+                    <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
+                    </div>
+                    </div>
 
-            </div>
-            `;
+                    </div>
+                    `;
                 // 2. #cards-box2 에 HTML을 붙인다.
                 $('#cards-box2').append(tempHtml);
             }
@@ -221,7 +223,7 @@
                     data: JSON.stringify(data),
                     success: function (response) {
                         alert('메시지가 성공적으로 작성되었습니다.');
-                        location.href = '/index.html'
+                        location.href = '/'
                     }
                 });
             }
@@ -259,15 +261,17 @@
                     }
                 })
             }
+
     </script>
+
 </head>
 
 <body>
 
 <div class="jumbotron">
-    <h1>항해99 My blog</h1>
+    <h1 id="getName" th:if="${userName} != null" th:text="${userName}">항해99 My blog</h1>
     <p>언제든지 게시글을 남겨주세요</p>
-    <button class="btn btn-primary btn-lg" type="button" onclick="location.href = '/index.html'">
+    <button class="btn btn-primary btn-lg" type="button" onclick="location.href = '/'">
         게시글조회
     </button>
     <button id="logout-text" class="btn btn-primary btn-lg" type="button" onclick="location.href = '/user/logout'">
@@ -284,12 +288,14 @@
             <span class="input-group-addon" id="basic-addon2"></span>
         </div>
 
-        <div class="form-title">작성자</div>
-        <div class="input-group">
-            <input type="text" name="username" id="username" class="form-control" placeholder="이름을 쓰세요"
-                   aria-describedby="basic-addon2">
-            <span class="input-group-addon" id="basic-addon2"></span>
-        </div>
+        <h3 th:if="${userName} != null" th:text="${userName}"></h3>
+
+        <!--        <div class="form-title">작성자</div>-->
+<!--        <div class="input-group">-->
+<!--            <input type="text" name="username" id="username" class="form-control" placeholder="이름을 쓰세요"-->
+<!--                   aria-describedby="basic-addon2">-->
+<!--            <span class="input-group-addon" id="basic-addon2"></span>-->
+<!--        </div>-->
 
         <div class="form-title">내용</div>
         <div class="input-group">

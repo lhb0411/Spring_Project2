@@ -30,6 +30,7 @@ public class NoticeController {
         return noticeRepository.findAllByOrderByModifiedAtDesc();
     }
 
+
     @PutMapping("/api/notices/{id}")
     public Long updateNotice(@PathVariable Long id, @RequestBody NoticeRequestDto requestDto) {
         noticeService.update(id, requestDto);

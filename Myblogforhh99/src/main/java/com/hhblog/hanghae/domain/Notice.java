@@ -41,4 +41,8 @@ public class Notice extends Timestamped { // 생성,수정 시간을 자동으�
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
+
+    public Notice(UserDetailsImpl userDetails) {
+        this.username = userDetails.getUsername();
+    }
 }
