@@ -1,5 +1,6 @@
-package com.hhblog.hanghae.domain;
+package com.hhblog.hanghae.repository;
 
+import com.hhblog.hanghae.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
