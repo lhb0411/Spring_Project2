@@ -1,8 +1,8 @@
 package com.hhblog.hanghae.service;
 
-import com.hhblog.hanghae.domain.SignupRequestDto;
+import com.hhblog.hanghae.Dto.SignupRequestDto;
 import com.hhblog.hanghae.domain.User;
-import com.hhblog.hanghae.domain.UserRepository;
+import com.hhblog.hanghae.repository.MemberRepository;
 import com.hhblog.hanghae.domain.UserRole;
 import com.hhblog.hanghae.security.Kakao.KakaoOAuth2;
 import com.hhblog.hanghae.security.Kakao.KakaoUserInfo;
@@ -20,14 +20,14 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final KakaoOAuth2 kakaoOAuth2;
     private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
 
     // UserService가 PasswordEndocder를 DI 받아 사용할 수 있게
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, KakaoOAuth2 kakaoOAuth2, AuthenticationManager authenticationManager) {
-        this.userRepository = userRepository;
+    public UserService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, KakaoOAuth2 kakaoOAuth2, AuthenticationManager authenticationManager) {
+        this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
         this.kakaoOAuth2 = kakaoOAuth2;
 
@@ -37,7 +37,7 @@ public class UserService {
     public void registerUser(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         // 회원 ID 중복 확인
-        Optional<User> found = userRepository.findByUsername(username);
+        Optional<User> found = memberRepository.findByUsername(username);
         if (found.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
         }
@@ -55,7 +55,7 @@ public class UserService {
         }
 
         User user = new User(username, password, email, role);
-        userRepository.save(user);
+        memberRepository.save(user);
     }
 
     public void kakaoLogin(String authorizedCode) {
@@ -66,18 +66,18 @@ public class UserService {
         String email = userInfo.getEmail();
 
         // DB 에 중복된 Kakao Id 가 있는지 확인
-        User kakaoUser = userRepository.findByKakaoId(kakaoId)
+        User kakaoUser = memberRepository.findByKakaoId(kakaoId)
                 .orElse(null);
 
         if (kakaoUser == null) {
             // 카카오 이메일과 동일한 이메일을 가진 회원이 있는지 확인
-            User sameEmailUser = userRepository.findByEmail(email).orElse(null);
+            User sameEmailUser = memberRepository.findByEmail(email).orElse(null);
             if (sameEmailUser != null) {
                 kakaoUser = sameEmailUser;
                 // 카카오 이메일과 동일한 이메일 회원이 있는 경우
                 // 카카오 Id 를 회원정보에 저장
                 kakaoUser.setKakaoId(kakaoId);
-                userRepository.save(kakaoUser);
+                memberRepository.save(kakaoUser);
 
             } else {
                 // 카카오 정보로 회원가입
@@ -91,7 +91,7 @@ public class UserService {
                 UserRole role = UserRole.USER;
 
                 kakaoUser = new User(username, encodedPassword, email, role, kakaoId);
-                userRepository.save(kakaoUser);
+                memberRepository.save(kakaoUser);
             }
         }
 

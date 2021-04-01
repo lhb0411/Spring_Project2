@@ -1,8 +1,10 @@
 package com.hhblog.hanghae.domain;
 
+import com.hhblog.hanghae.Dto.SignupRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 
@@ -12,21 +14,21 @@ import javax.persistence.*;
 @Entity // DB 테이블 역할을 합니다.
 public class User extends Timestamped {
 
-    public User(String username, String password,String email,UserRole role) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.kakaoId = null;
-    }
-
-    public User(String username, String password, String email, UserRole role, Long kakaoId) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.kakaoId = kakaoId;
-    }
+//    public User(String username, String password,String email,UserRole role) {
+//        this.username = username;
+//        this.password = password;
+//        this.email = email;
+//        this.role = role;
+//        this.kakaoId = null;
+//    }
+//
+//    public User(String username, String password, String email, UserRole role, Long kakaoId) {
+//        this.username = username;
+//        this.password = password;
+//        this.email = email;
+//        this.role = role;
+//        this.kakaoId = kakaoId;
+//    }
 
     // ID가 자동으로 생성 및 증가합니다.
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,12 +43,20 @@ public class User extends Timestamped {
     private String password;
 
     @Column(nullable = false)
-    private String email;
+    private String passwordNen;
 
     @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private UserRole role;
+    private String passwordConfirm;
 
     @Column(nullable = true)
     private Long kakaoId;
 }
+
+    public User(SignupRequestDto signupRequestDto){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); //암호화
+
+        this.username = signupRequestDto.getUsername();
+        this.password = encoder.encode(signupRequestDto.getPassword());
+        this.passwordNen = signupRequestDto.getPasswordNen();
+        this.passwordConfirm = signupRequestDto.getPasswordConfirm();
+    }

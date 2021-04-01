@@ -1,14 +1,10 @@
 package com.hhblog.hanghae.controller;
 
-import com.hhblog.hanghae.domain.Notice;
-import com.hhblog.hanghae.domain.SignupRequestDto;
+import com.hhblog.hanghae.Dto.SignupRequestDto;
 import com.hhblog.hanghae.domain.User;
-import com.hhblog.hanghae.domain.UserRepository;
-import com.hhblog.hanghae.security.UserDetailsImpl;
+import com.hhblog.hanghae.repository.MemberRepository;
 import com.hhblog.hanghae.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
 
     // 회원 로그인 페이지 // thymleaf에 의해 login string만 내려주면 login.html을 찾아 보여줌
@@ -69,7 +65,7 @@ public class UserController {
 
     @GetMapping("/api/user/{id}")
     public String getUserNameById(@PathVariable Long id) {
-        User user = userRepository.findById(id).orElseThrow(
+        User user = memberRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
         return user.getUsername();
     }

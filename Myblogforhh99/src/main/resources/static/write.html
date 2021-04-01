@@ -46,222 +46,28 @@
             return true;
         }
 
+        function writePost() {
+            let title = $('#title').val();
+            let username = $('#username').val();
+            let contents = $('#contents').val();
 
-        function detailContents(id) {
-            let title = $(`#${id}-title`).text().trim();
-            let username = $(`#${id}-username`).text().trim();
-            let contents = $(`#${id}-contents`).text().trim();
-            let date = $(`#${id}-inputDate`).text().trim();
+            if (isValidContents(contents) == false) {
+                return;
+            }
 
-
-            $(`#cards-box`).hide();
-            addHTML2(id, title, username, contents, date);
-
-        }
-
-        function editPost(id) {
-            showEdits(id);
-            let title = $(`#${id}-title`).text().trim();
-            let username = $(`#${id}-username`).text().trim();
-            let contents = $(`#${id}-contents`).text().trim();
-            $(`#${id}-titleInput`).val(title);
-            $(`#${id}-userInput`).val(username);
-            $(`#${id}-textarea`).val(contents);
-        }
-
-
-        function showEdits(id) {
-            $(`#${id}-inputArea2`).show();
-            $(`#${id}-inputArea`).show();
-            $(`#${id}-editarea`).show();
-            $(`#${id}-submit`).show();
-            $(`#${id}-delete`).show();
-
-
-            $(`#${id}-inputDate`).hide();
-            $(`#${id}-title`).hide();
-            $(`#${id}-username`).hide();
-            $(`#${id}-contents`).hide();
-            $(`#${id}-edit`).hide();
-        }
-
-
-        $(document).ready(function () {
-            getMessages();
-        })
-
-
-        function getMessages() {
-            $('#cards-box').empty();
+            let data = {'title': title, 'username': username, 'contents': contents};
 
             $.ajax({
-                type: 'GET',
-                url: '/api/notices',
+                type: "POST",
+                url: "/api/notices",
+                contentType: "application/json",
+                data: JSON.stringify(data),
                 success: function (response) {
-                    for (let i = 0; i < response.length; i++) {
-                        let message = response[i];
-                        let id = message['id'];
-                        let title = message['title'];
-                        let username = message['username'];
-                        let contents = message['contents'];
-                        let modifiedAt = message['modifiedAt'];
-                        addHTML(id, title, username, contents, modifiedAt);
-                    }
+                    alert('메시지가 성공적으로 작성되었습니다.');
+                    location.href = '/'
                 }
-            })
+            });
         }
-
-        function addHTML(id, title, username, contents, modifiedAt) {
-            // 1. HTML 태그를 만듭니다.
-            console.log('test');
-            console.log(id, title, username, contents, modifiedAt);
-            let tempHtml = `<div class="card">
-                                <!-- date/username 영역 -->
-                                <div class="metadata">
-                                <div class="input-group titleInput" id="${id}-inputArea2">
-                                <input id="${id}-titleInput" type="text" name="title" id="title" class="form-control2" placeholder="제목을 쓰세요" aria-describedby="basic-addon2">
-                                <span class="input-group-addon" id="basic-addon2"></span>
-                                </div>
-                                <a id="${id}-title" class="postTitle" onclick="detailContents('${id}')" style="cursor:pointer;">
-                                ${title}
-                                </a>
-
-                                <div id="${id}-username" class="postUsername">
-                                ${username}
-                                </div>
-
-                                <div class="input-group userInput" id="${id}-inputArea">
-                                <input id="${id}-userInput" type="text" name="username" id="username" class="form-control" placeholder="이름을 쓰세요" aria-describedby="basic-addon2">
-                                <span class="input-group-addon" id="basic-addon2"></span>
-                                </div>
-
-                                <div class="date" id="${id}-inputDate">
-                                ${modifiedAt}
-                                </div>
-                                </div>
-                                    <!-- contents 조회/수정 영역-->
-                                <div class="contents">
-                                <div id="${id}-contents" class="text">
-                                <pre>${contents}</pre>
-                                </div>
-                                <div id="${id}-editarea" class="edit">
-                                <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
-                                </div>
-                                </div>
-
-                                    <!-- 버튼 영역-->
-                                <div class="footer">
-                                <button id="${id}-edit" type="button" class="btn btn-outline-primary edit_btn" onclick="editPost('${id}')" >수정</button>
-                                <button id="${id}-delete" type="button" class="btn btn-outline-primary delte_btn" onclick="deleteOne('${id}')">삭제</button>
-                                <button id="${id}-submit" type="button" class="btn btn-outline-primary submit_btn" onclick="submitEdit('${id}')" style="display:none">수정완료</button>
-                                </div>
-                                </div>
-                                `;
-
-            // 2. #cards-box 에 HTML을 붙인다.
-            $('#cards-box').append(tempHtml);
-        }
-
-            function addHTML2(id, title, username, contents, modifiedAt) {
-                // 1. HTML 태그를 만듭니다.
-                let tempHtml = `<div class="card">
-                <!-- date/username 영역 -->
-                    <div class="metadata">
-                    <div class="input-group titleInput" id="${id}-inputArea2">
-                    <input id="${id}-titleInput" type="text" name="title" id="title" class="form-control2" placeholder="제목을 쓰세요" aria-describedby="basic-addon2">
-                    <span class="input-group-addon" id="basic-addon2"></span>
-                    </div>
-                    <a id="${id}-title" class="postTitle" >
-                    ${title}
-                    </a>
-
-                    <div id="${id}-username" class="postUsername">
-                    ${username}
-                    </div>
-
-                    <div class="input-group userInput" id="${id}-inputArea">
-                    <input id="${id}-userInput" type="text" name="username" id="username" class="form-control" placeholder="이름을 쓰세요" aria-describedby="basic-addon2">
-                    <span class="input-group-addon" id="basic-addon2"></span>
-                    </div>
-
-                    <div class="date" id="${id}-inputDate">
-                    ${modifiedAt}
-                    </div>
-                    </div>
-                        <!-- contents 조회/수정 영역-->
-                    <div class="contents">
-                    <div id="${id}-contents" class="text">
-                    <pre>${contents}</pre>
-                    </div>
-                    <div id="${id}-editarea" class="edit">
-                    <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
-                    </div>
-                    </div>
-
-                    </div>
-                    `;
-                // 2. #cards-box2 에 HTML을 붙인다.
-                $('#cards-box2').append(tempHtml);
-            }
-
-
-            function writePost() {
-                let title = $('#title').val();
-                let username = $('#username').val();
-                let contents = $('#contents').val();
-
-                if (isValidContents(contents) == false) {
-                    return;
-                }
-
-                let data = {'title': title, 'username': username, 'contents': contents};
-
-                $.ajax({
-                    type: "POST",
-                    url: "/api/notices",
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (response) {
-                        alert('메시지가 성공적으로 작성되었습니다.');
-                        location.href = '/'
-                    }
-                });
-            }
-
-            function submitEdit(id) {
-                let title = $(`#${id}-titleInput`).val();
-                let username = $(`#${id}-userInput`).val();
-                let contents = $(`#${id}-textarea`).val();
-
-                if (isValidContents(contents) == false) {
-                    return;
-                }
-
-                let data = {'title': title, 'username': username, 'contents': contents};
-
-                $.ajax({
-                    type: "PUT",
-                    url: `/api/notices/${id}`,
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (response) {
-                        alert('메시지 변경에 성공하였습니다.');
-                        window.location.reload();
-                    }
-                });
-            }
-
-            function deleteOne(id) {
-                $.ajax({
-                    type: "DELETE",
-                    url: `/api/notices/${id}`,
-                    success: function (response) {
-                        alert('메시지 삭제에 성공하였습니다.');
-                        window.location.reload();
-                    }
-                })
-            }
-
     </script>
 
 </head>
@@ -269,7 +75,7 @@
 <body>
 
 <div class="jumbotron">
-    <h1 id="getName" th:if="${userName} != null" th:text="${userName}">항해99 My blog</h1>
+    <h1 id="getName" th:if="${userName} != null" th:text="${userName}"></h1>
     <p>언제든지 게시글을 남겨주세요</p>
     <button class="btn btn-primary btn-lg" type="button" onclick="location.href = '/'">
         게시글조회
@@ -290,12 +96,6 @@
 
         <h3 th:if="${userName} != null" th:text="${userName}"></h3>
 
-        <!--        <div class="form-title">작성자</div>-->
-<!--        <div class="input-group">-->
-<!--            <input type="text" name="username" id="username" class="form-control" placeholder="이름을 쓰세요"-->
-<!--                   aria-describedby="basic-addon2">-->
-<!--            <span class="input-group-addon" id="basic-addon2"></span>-->
-<!--        </div>-->
 
         <div class="form-title">내용</div>
         <div class="input-group">

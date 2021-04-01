@@ -2,7 +2,7 @@ package com.hhblog.hanghae.controller;
 
 import com.hhblog.hanghae.domain.Article;
 import com.hhblog.hanghae.repository.ArticleRepository;
-import com.hhblog.hanghae.Dto.NoticeRequestDto;
+import com.hhblog.hanghae.Dto.ArticleRequestDto;
 import com.hhblog.hanghae.security.UserDetailsImpl;
 import com.hhblog.hanghae.service.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -13,15 +13,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-public class NoticeController {
-
+public class ArticleController {
     private final ArticleRepository articleRepository;
     private final ArticleService articleService;
 
     @PostMapping("/api/notices")
     // requestDto 는, 생성 요청을 의미
     // 저장하는 것은 Dto가 아니라 Course이니, Dto의 정보를 course에 담아야 함.
-    public Article createNotice(@RequestBody NoticeRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Article createNotice(@RequestBody ArticleRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         Article article = new Article(requestDto, userDetails);
         articleRepository.save(article);
         return article;
@@ -34,7 +33,7 @@ public class NoticeController {
 
 
     @PutMapping("/api/notices/{id}")
-    public Long updateNotice(@PathVariable Long id, @RequestBody NoticeRequestDto requestDto) {
+    public Long updateNotice(@PathVariable Long id, @RequestBody ArticleRequestDto requestDto) {
         articleService.update(id, requestDto);
         return id;
     }

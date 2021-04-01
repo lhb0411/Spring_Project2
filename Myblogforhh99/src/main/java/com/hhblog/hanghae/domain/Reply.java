@@ -1,6 +1,6 @@
 package com.hhblog.hanghae.domain;
 
-import com.hhblog.hanghae.Dto.CommentRequestDto;
+import com.hhblog.hanghae.Dto.ReplyRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,14 +11,14 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Comment extends Timestamped{
+public class Reply extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
-    private Long notice_id;
+    private Long article_id;
 
     @Column(nullable = false)
     private String username;
@@ -26,17 +26,17 @@ public class Comment extends Timestamped{
     @Column(nullable = false)
     private String contents;
 
-    public Comment (CommentRequestDto commentRequestDto){
-        this.id = commentRequestDto.getId();
-        this.notice_id = commentRequestDto.getNotice_id();
-        this.username = commentRequestDto.getUsername();
-        this.contents = commentRequestDto.getContents();
+    public Comment (ReplyRequestDto replyRequestDto){
+        this.id = replyRequestDto.getId();
+        this.article_id = replyRequestDto.getArticle_id();
+        this.username = replyRequestDto.getUsername();
+        this.contents = replyRequestDto.getContents();
     }
 
-    public void update_comment(CommentRequestDto commentRequestDto){
-        this.notice_id = commentRequestDto.getNotice_id();
-        this.username = commentRequestDto.getUsername();
-        this.contents = commentRequestDto.getContents();
+    public void update_comment(ReplyRequestDto replyRequestDto){
+        this.article_id = replyRequestDto.getArticle_id();
+        this.username = replyRequestDto.getUsername();
+        this.contents = replyRequestDto.getContents();
     }
 
 }

@@ -1,6 +1,5 @@
 package com.hhblog.hanghae.domain;
 
-import com.hhblog.hanghae.Dto.NoticeRequestDto;
 import com.hhblog.hanghae.security.UserDetailsImpl;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor // 기본생성자를 만듭니다.
 @Getter
 @Entity // 테이블과 연계됨을 스프링에게 알려줍니다.
-public class Notice extends Timestamped { // 생성,수정 시간을 자동으로 만들어줍니다.
+public class Article extends Timestamped { // 생성,수정 시간을 자동으로 만들어줍니다.
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
@@ -24,19 +23,19 @@ public class Notice extends Timestamped { // 생성,수정 시간을 자동으�
     @Column(nullable = false)
     private String contents;
 
-    public Notice(NoticeRequestDto requestDto, UserDetailsImpl userDetails) {
+    public Article(AritcleRequestDto aritcleRequestDto) {
         this.title = requestDto.getTitle();
         this.username = userDetails.getUsername();
         this.contents = requestDto.getContents();
     }
 
-    public void update(NoticeRequestDto requestDto) {
+    public void update(AritcleRequestDto aritcleRequestDto) {
         this.title = requestDto.getTitle();
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
 
-    public Notice(UserDetailsImpl userDetails) {
+    public Article(UserDetailsImpl userDetails) {
         this.username = userDetails.getUsername();
     }
 }
